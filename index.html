@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación de Boda</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://static.vecteezy.com/system/resources/thumbnails/009/740/424/small/red-love-heart-element-particle-flowing-on-pink-background-romantic-cg-abstract-glitter-for-valentine-and-wedding-free-video.jpg') no-repeat center center;
+      background-size: cover;
+      filter: blur(3px) brightness(0.6);
+      z-index: -1;
+    }
+
+    .overlay {
+      background: rgba(223, 211, 199, 0.85);
+      border-radius: 20px;
+      max-width: 800px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: auto;
+      padding: 40px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      position: relative; /* necesario para el botón absoluto */
+    }
+
+    h1 { font-size: 2.8rem; color: #8b5e3c; margin: 0; }
+    h2 { font-size: 1.5rem; margin-top: 10px; color: #a66c47; }
+    p { font-size: 1.1rem; margin: 15px 0; }
+    .date { font-size: 1.3rem; font-weight: bold; color: #6b4226; margin: 20px 0; }
+
+    /* Botones normales */
+    .btn {
+      display: block;
+      width: 100%;
+      max-width: 350px;
+      padding: 12px 25px;
+      margin: 20px auto 0;
+      background: #8b5e3c;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      transition: 0.3s;
+      cursor: pointer;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .btn img { vertical-align: middle; margin-right: 8px; }
+    .btn:hover { background: #6b4226; }
+
+    .photo { margin: 20px 0; }
+
+    .photo .girar {
+      display: inline-block;
+      animation: girar 60s linear infinite;
+    }
+
+    .photo img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid #8b5e3c;
+      box-shadow:
+        0 0 15px rgba(255, 182, 193, 0.8),
+        0 0 30px rgba(255, 105, 180, 0.6),
+        0 0 45px rgba(255, 20, 147, 0.4);
+      max-width: 90vw;
+    }
+
+    @keyframes girar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .contador { margin: 15px 0; font-size: 1.5rem; font-weight: bold; color: #8b5e3c; }
+    .contador-titulo { font-size: 1.3rem; font-weight: bold; color: #6b4226; margin-top: 25px; }
+
+    /* Botón de música dentro del overlay */
+    #toggleAudio {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 8px 12px;
+      background: #8b5e3c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      z-index: 5;
+    }
+
+    .detener {
+      animation-play-state: paused !important;
+    }
+
+    img, video { max-width: 100%; height: auto; }
+
+    @media (max-width: 600px) {
+      .overlay { padding: 20px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.2rem; }
+      .photo img { width: 150px; height: 150px; }
+      .btn { padding: 15px; font-size: 1rem; }
+      #toggleAudio { top: 10px; right: 10px; padding: 6px 10px; font-size: 0.9rem; }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      .overlay { padding: 30px; }
+      h1 { font-size: 2.4rem; }
+      .photo img { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="musicaBoda" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <div class="overlay">
+    <button id="toggleAudio">🎵</button>
+
+    <h1>💍 Cristina & Ruben 💍</h1>
+    <h2>¡Nos casamos!</h2>
+
+    <div class="photo">
+      <div id="foto" class="girar detener">
+        <img src="data:image/jpeg;base64,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" alt="Novios">
+      </div>
+    </div>
+
+    <p>Con mucha alegría queremos invitarte a celebrar con nosotros este día tan especial.</p>
+    <p class="date">📅 27 de diciembre de 2025 - 18:00 PM</p>
+    <p>Los esperamos en el sindicato unico de trabajadores al servicio de los poderes</p>
+
+    <div>
+      <a href="https://maps.app.goo.gl/nNzryJwwEYwuMHM59" target="_blank" class="btn">📍 Ver Ubicación</a>
+    </div>
+
+    <div class="contador-titulo">⏳ Tiempo restante</div>
+    <div class="contador" id="contador"></div>
+
+    <p>Tu presencia hará que nuestra boda sea aún más especial.<br>¡Te esperamos con mucho cariño!</p>
+
+    <a href="https://wa.me/529982297357?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20la%20boda" class="btn" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:22px;">
+      Confirmar asistencia
+    </a>
+
+    <a class="btn" target="_blank"
+       href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Cristina+y+Ruben&dates=20251227T180000/20251227T230000&details=Te+esperamos.+Confirmar+asistencia:+https%3A%2F%2Fwa.me%2F529982297357&location=Sindicato+unico+de+trabajadores+al+servicio+de+los+poderes">
+      ➕ Agregar al calendario
+    </a>
+
+  </div>
+
+  <script>
+    var fechaBoda = new Date("Dec 27, 2025 18:00:00").getTime();
+    var x = setInterval(function() {
+      var ahora = new Date().getTime();
+      var diferencia = fechaBoda - ahora;
+      if (diferencia > 0) {
+       
+        var dias = Math.floor((diferencia % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+        var horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        var segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+        document.getElementById("contador").innerHTML =
+          dias + " días " + horas + " horas " + minutos + " minutos " + segundos + " segundos";;
+      } else {
+        clearInterval(x);
+        document.getElementById("contador").innerHTML = "💖 ¡Hoy es el gran día! 💖";
+      }
+    }, 1000);
+
+    const audio = document.getElementById('musicaBoda');
+    const btn = document.getElementById('toggleAudio');
+    const foto = document.getElementById('foto');
+
+    btn.addEventListener('click', () => {
+      if(audio.paused){
+        audio.play();
+        foto.classList.remove('detener');
+        btn.textContent = "🔇 ";
+      } else {
+        audio.pause();
+        foto.classList.add('detener');
+        btn.textContent = "🎵";
+      }
+    });
+
+    function iniciarAudio() {
+      if(audio.paused){
+        audio.play().catch(()=>{});
+        foto.classList.remove('detener');
+        btn.textContent = "🔇";
+      }
+      document.removeEventListener('click', iniciarAudio);
+    }
+    document.addEventListener('click', iniciarAudio);
+  </script>
+</body>
+</html>
